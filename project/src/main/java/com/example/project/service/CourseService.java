@@ -34,14 +34,9 @@ public class CourseService {
     }
 
     @Transactional
-    public String editCourse(CourseDTO courseDTO, Long courseId) {
-        if(courseId < 0){
-            throw new NotAllowedOperationException();
-        }
-        Course course = courseRepository.findById(courseId)
-                .orElseThrow(() -> new CourseNotFoundException("Course not found with ID: " + courseId));
-
+    public String editCourse(CourseDTO courseDTO, Course course) {
         Course courseEdit = CourseEdit.toEntity(course, courseDTO);
+
         courseRepository.save(courseEdit);
         return "Course edited";
     }

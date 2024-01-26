@@ -18,7 +18,7 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
 
-    @GetMapping("/getall")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<StudentDTO> getAllStudents() {
         return studentService.getAllStudents();
@@ -30,11 +30,12 @@ public class StudentController {
         studentService.createStudent(studentDTO);
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void editStudent(@RequestBody @Validated StudentDTO studentDTO, @PathVariable Long id) {
         studentService.editStudent(studentDTO, StudentCreate.toEntity(studentService.findByID(id)));
     }
+
 
     @GetMapping("/birthyear")
     @ResponseStatus(HttpStatus.OK)

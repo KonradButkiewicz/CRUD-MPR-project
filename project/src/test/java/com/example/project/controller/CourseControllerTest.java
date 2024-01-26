@@ -39,11 +39,9 @@ public class CourseControllerTest {
 
     @Test
     void getAllCourses() throws Exception {
-        // Mocking the service to return a list of courses
         when(courseService.getAllCourses()).thenReturn(Arrays.asList(new CourseDTO(), new CourseDTO()));
 
-        // Performing the request and validating the response
-        mockMvc.perform(get("/course/getall"))
+        mockMvc.perform(get("/course/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(2));
@@ -51,10 +49,8 @@ public class CourseControllerTest {
 
     @Test
     void addCourse() throws Exception {
-        // Mocking the service to return a success message
         when(courseService.createCourse(any())).thenReturn("Course created");
 
-        // Performing the request and validating the response
         ResultActions result = mockMvc.perform(post("/course/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
@@ -64,12 +60,10 @@ public class CourseControllerTest {
 
     @Test
     void editCourse() throws Exception {
-        // Mocking the service to return a success message
         when(courseService.findByID(any())).thenReturn(new CourseDTO());
         when(courseService.editCourse(any(), any())).thenReturn("Course edited");
 
-        // Performing the request and validating the response
-        ResultActions result = mockMvc.perform(post("/course/edit/{id}", 1L)
+        ResultActions result = mockMvc.perform(put("/course/edit/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
@@ -78,8 +72,7 @@ public class CourseControllerTest {
 
     @Test
     void deleteRoomsBelowNumber200() throws Exception {
-        // Performing the request and validating the response
-        ResultActions result = mockMvc.perform(post("/course/delete"));
+         ResultActions result = mockMvc.perform(post("/course/delete"));
 
         result.andExpect(status().isOk());
     }

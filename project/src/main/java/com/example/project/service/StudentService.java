@@ -35,13 +35,7 @@ public class StudentService {
     }
 
     @Transactional
-    public String editStudent(StudentDTO studentDTO, Long studentId) {
-        if(studentId < 0){
-            throw new NotAllowedOperationException();
-        }
-        Student student = studentRepository.findById(studentId)
-                .orElseThrow(() -> new StudentNotFoundException("Student not found with ID: " + studentId));
-
+    public String editStudent(StudentDTO studentDTO, Student student) {
         student = StudentEdit.toEntity(student, studentDTO);
         studentRepository.save(student);
 
@@ -74,7 +68,7 @@ public class StudentService {
         if(studentId < 0){
             throw new NotAllowedOperationException();
         }
-        return StudentRead.toDTO(studentRepository.findById(studentId)
+        return StudentRead.toDTO(studentRepository.findById(studentId).stream().findFirst()
                 .orElseThrow(() -> new StudentNotFoundException("Student not found with ID: " + studentId)));
     }
 }

@@ -18,7 +18,7 @@ import java.util.List;
 public class CourseController {
     private final CourseService courseService;
 
-    @GetMapping("/getall")
+    @GetMapping("/all")
     @ResponseStatus(HttpStatus.OK)
     public List<CourseDTO> getAllCourses(){
         return courseService.getAllCourses();
@@ -30,7 +30,7 @@ public class CourseController {
         courseService.createCourse(courseDTO);
     }
 
-    @PostMapping("/edit/{id}")
+    @PutMapping("/edit/{id}")
     @ResponseStatus(HttpStatus.CREATED)
     public void editCourse(@RequestBody @Validated CourseDTO courseDTO, @PathVariable Long id) {
         courseService.editCourse(courseDTO, CourseCreate.toEntity(courseService.findByID(id)));}

@@ -36,11 +36,9 @@ public class StudentControllerTest {
 
     @Test
     void getAllStudents() throws Exception {
-        // Mocking the service to return a list of students
         when(studentService.getAllStudents()).thenReturn(Arrays.asList(new StudentDTO(), new StudentDTO()));
 
-        // Performing the request and validating the response
-        mockMvc.perform(get("/students/getall"))
+        mockMvc.perform(get("/students/all"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(2));
@@ -48,10 +46,8 @@ public class StudentControllerTest {
 
     @Test
     void addCourse() throws Exception {
-        // Mocking the service to return a success message
         when(studentService.createStudent(any())).thenReturn("Student created");
 
-        // Performing the request and validating the response
         ResultActions result = mockMvc.perform(post("/students/create")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
@@ -61,24 +57,21 @@ public class StudentControllerTest {
 
     @Test
     void editStudent() throws Exception {
-        // Mocking the service to return a success message
         when(studentService.findByID(any())).thenReturn(new StudentDTO());
         when(studentService.editStudent(any(), any())).thenReturn("Student edited");
 
-        // Performing the request and validating the response
-        ResultActions result = mockMvc.perform(post("/students/edit/{id}", 1L)
+        ResultActions result = mockMvc.perform(put("/students/edit/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
         result.andExpect(status().isOk());
     }
 
+
     @Test
     void getStudentByBirthYear() throws Exception {
-        // Mocking the service to return a list of students
         when(studentService.getStudentByBirthYear(any())).thenReturn(Collections.singletonList(new StudentDTO()));
 
-        // Performing the request and validating the response
         mockMvc.perform(get("/students/birthyear").param("birthYear", "1990"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
@@ -87,10 +80,8 @@ public class StudentControllerTest {
 
     @Test
     void getLowestBirthYear() throws Exception {
-        // Mocking the service to return the lowest birth year
         when(studentService.getLowestBirthYear()).thenReturn(1990);
 
-        // Performing the request and validating the response
         mockMvc.perform(get("/students/lowestbirthyear"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))

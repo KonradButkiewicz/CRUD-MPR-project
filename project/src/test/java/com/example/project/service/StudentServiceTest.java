@@ -3,15 +3,9 @@ package com.example.project.service;
 import com.example.project.model.Course;
 import com.example.project.model.Student;
 import com.example.project.model.dto.StudentDTO;
-import com.example.project.model.dto.mapper.student.StudentCreate;
-import com.example.project.model.dto.mapper.student.StudentEdit;
-import com.example.project.model.dto.mapper.student.StudentRead;
-import com.example.project.model.exceptions.global.CreationException;
-import com.example.project.model.exceptions.global.NotAllowedOperationException;
 import com.example.project.model.exceptions.service.StudentNotFoundException;
 import com.example.project.repository.CourseRepository;
 import com.example.project.repository.StudentRepository;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -53,8 +47,8 @@ public class StudentServiceTest {
     public void testEditStudent() {
         Student student = new Student();
         StudentDTO studentDTO = new StudentDTO();
-
-        assertEquals("Student edited", studentService.editStudent(studentDTO, student));
+        when(courseRepository.findById(any())).thenReturn(Optional.of(new Course()));
+        assertEquals("Student edited", studentService.editStudent(studentDTO, student, 1L));
     }
 
     @Test

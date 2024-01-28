@@ -59,7 +59,7 @@ public class StudentControllerTest {
     @Test
     void editStudent() throws Exception {
         when(studentService.findByID(any())).thenReturn(new StudentDTO());
-        when(studentService.editStudent(any(), any())).thenReturn("Student edited");
+        when(studentService.editStudent(any(), any(), any())).thenReturn("Student edited");
 
         ResultActions result = mockMvc.perform(put("/students/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -31,10 +31,10 @@ public class StudentController {
         studentService.createStudent(studentDTO, id);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{id}/{courseId}")
     @ResponseStatus(HttpStatus.OK)
-    public void editStudent(@RequestBody @Validated StudentDTO studentDTO, @PathVariable Long id) {
-        studentService.editStudent(studentDTO, StudentCreate.toEntity(studentService.findByID(id)));
+    public void editStudent(@RequestBody @Validated StudentDTO studentDTO, @PathVariable Long id, @PathVariable Long courseId) {
+        studentService.editStudent(studentDTO, StudentCreate.toEntity(studentService.findByID(id)), courseId);
     }
 
     @GetMapping("/birthyear")

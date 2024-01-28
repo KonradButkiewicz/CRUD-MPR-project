@@ -43,9 +43,10 @@ public class StudentService {
     }
 
     @Transactional
-    public String editStudent(StudentDTO studentDTO, Student student) {
+    public String editStudent(StudentDTO studentDTO, Student student, Long id) {
         try {
             student = StudentEdit.toEntity(student, studentDTO);
+            student.setCourse(courseRepository.findById(id).get());
             studentRepository.save(student);
 
             return "Student edited";

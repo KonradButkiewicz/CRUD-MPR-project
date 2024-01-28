@@ -46,14 +46,15 @@ public class StudentControllerTest {
 
     @Test
     void addCourse() throws Exception {
-        when(studentService.createStudent(any())).thenReturn("Student created");
+        when(studentService.createStudent(any(), any())).thenReturn("Student created");
 
-        ResultActions result = mockMvc.perform(post("/students")
+        ResultActions result = mockMvc.perform(post("/students/{id}", 123L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
         result.andExpect(status().isCreated());
     }
+
 
     @Test
     void editStudent() throws Exception {

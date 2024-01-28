@@ -55,7 +55,6 @@ public class CourseRepositoryTest {
 
 
         course.setBuilding(Building.A1);
-        course.setStudentsList(studentList);
 
         courseRepository.save(course);
         studentRepository.save(student);

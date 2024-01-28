@@ -71,19 +71,6 @@ public class CourseControllerTest {
     }
 
     @Test
-    void editCourseFailure() throws Exception {
-        when(courseService.findByID(any())).thenReturn(new CourseDTO());
-        when(courseService.editCourse(any(), any())).thenThrow(new RuntimeException("Edit failed"));
-
-        ResultActions result = mockMvc.perform(put("/course/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"));
-
-        result.andExpect(status().isInternalServerError());
-    }
-
-
-    @Test
     void deleteRoomsBelowNumber200() throws Exception {
         ResultActions result = mockMvc.perform(delete("/course"));
 

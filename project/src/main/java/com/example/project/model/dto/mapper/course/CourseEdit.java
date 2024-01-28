@@ -12,18 +12,11 @@ import java.util.stream.Collectors;
 
 public class CourseEdit {
     public static Course toEntity(Course course, CourseDTO courseDTO) {
-        List<StudentDTO> studentDTOList = courseDTO.getStudentsList();
-        List<Student> studentList = null;
-
-        if (studentDTOList != null) {
-            studentList = studentDTOList.stream().map(StudentCreate::toEntity).toList();
-        }
 
         course.setId(courseDTO.getId());
         course.setName(courseDTO.getName());
         course.setBuilding(courseDTO.getBuilding());
         course.setRoomNumber(courseDTO.getRoomNumber());
-        course.setStudentsList(studentList);
 
         return course;
     }

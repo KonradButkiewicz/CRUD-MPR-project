@@ -24,7 +24,4 @@ public class Course {
     @Enumerated(EnumType.STRING)
     private Building building;
 
-    @OneToMany(mappedBy = "course")
-    private List<Student> studentsList;
-
 }

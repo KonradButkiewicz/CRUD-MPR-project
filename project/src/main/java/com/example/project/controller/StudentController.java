@@ -2,6 +2,7 @@ package com.example.project.controller;
 
 import com.example.project.model.dto.StudentDTO;
 import com.example.project.model.dto.mapper.student.StudentCreate;
+import com.example.project.service.CourseService;
 import com.example.project.service.StudentService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.repository.query.Param;
@@ -24,10 +25,10 @@ public class StudentController {
         return studentService.getAllStudents();
     }
 
-    @PostMapping
+    @PostMapping("/{id}")
     @ResponseStatus(HttpStatus.CREATED)
-    public void addCourse(@RequestBody @Validated StudentDTO studentDTO) {
-        studentService.createStudent(studentDTO);
+    public void addCourse(@RequestBody @Validated StudentDTO studentDTO , @PathVariable Long id) {
+        studentService.createStudent(studentDTO, id);
     }
 
     @PutMapping("/{id}")
@@ -47,6 +48,8 @@ public class StudentController {
     public Integer getLowestBirthYear(){
         return studentService.getLowestBirthYear();
     }
+
+
 
 
 }

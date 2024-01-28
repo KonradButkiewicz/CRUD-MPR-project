@@ -10,7 +10,6 @@ public class StudentEdit {
         student.setLastname(studentDTO.getLastname());
         student.setBirthYear(studentDTO.getBirthYear());
         student.setGender(studentDTO.getGender());
-        student.setCourse(studentDTO.getCourse());
 
         return student;
     }

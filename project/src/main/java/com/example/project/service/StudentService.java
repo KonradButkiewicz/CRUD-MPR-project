@@ -1,5 +1,6 @@
 package com.example.project.service;
 
+import com.example.project.model.Course;
 import com.example.project.model.Student;
 import com.example.project.model.dto.StudentDTO;
 import com.example.project.model.dto.mapper.student.StudentCreate;
@@ -8,6 +9,7 @@ import com.example.project.model.dto.mapper.student.StudentRead;
 import com.example.project.model.exceptions.global.CreationException;
 import com.example.project.model.exceptions.global.NotAllowedOperationException;
 import com.example.project.model.exceptions.service.StudentNotFoundException;
+import com.example.project.repository.CourseRepository;
 import com.example.project.repository.StudentRepository;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
@@ -21,11 +23,17 @@ import java.util.List;
 public class StudentService {
 
     private final StudentRepository studentRepository;
+    private final CourseRepository courseRepository;
 
     @Transactional
-    public String createStudent(StudentDTO studentDTO) {
+    public String createStudent(StudentDTO studentDTO, Long id) {
         try {
             Student student = StudentCreate.toEntity(studentDTO);
+
+            Course course = courseRepository.findById(id).get();
+
+            student.setCourse(course);
+
             studentRepository.save(student);
 
             return "Student created";

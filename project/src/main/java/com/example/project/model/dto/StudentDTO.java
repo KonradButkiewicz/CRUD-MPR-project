@@ -2,6 +2,7 @@ package com.example.project.model.dto;
 
 import com.example.project.model.Course;
 import com.example.project.model.enums.Gender;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -25,6 +26,6 @@ public class StudentDTO {
     @NotNull(message = "Gender can not be null")
     private Gender gender;
 
-
-    private Course course;
+    @JsonProperty("course")
+    private CourseDTO courseDTO;
 }

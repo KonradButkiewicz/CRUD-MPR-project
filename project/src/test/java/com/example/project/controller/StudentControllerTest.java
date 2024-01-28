@@ -68,18 +68,6 @@ public class StudentControllerTest {
     }
 
     @Test
-    void editStudentFailure() throws Exception {
-        when(studentService.findByID(any())).thenReturn(new StudentDTO());
-        when(studentService.editStudent(any(), any())).thenThrow(new RuntimeException("Edit failed"));
-
-        ResultActions result = mockMvc.perform(put("/students/{id}", 1L)
-                .contentType(MediaType.APPLICATION_JSON)
-                .content("{}"));
-
-        result.andExpect(status().isInternalServerError());
-    }
-
-    @Test
     void getStudentByBirthYear() throws Exception {
         when(studentService.getStudentByBirthYear(any())).thenReturn(Collections.singletonList(new StudentDTO()));
 

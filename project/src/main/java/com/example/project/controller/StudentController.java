@@ -18,24 +18,23 @@ import java.util.List;
 public class StudentController {
     private final StudentService studentService;
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<StudentDTO> getAllStudents() {
         return studentService.getAllStudents();
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addCourse(@RequestBody @Validated StudentDTO studentDTO) {
         studentService.createStudent(studentDTO);
     }
 
-    @PutMapping("/edit/{id}")
+    @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
     public void editStudent(@RequestBody @Validated StudentDTO studentDTO, @PathVariable Long id) {
         studentService.editStudent(studentDTO, StudentCreate.toEntity(studentService.findByID(id)));
     }
-
 
     @GetMapping("/birthyear")
     @ResponseStatus(HttpStatus.OK)

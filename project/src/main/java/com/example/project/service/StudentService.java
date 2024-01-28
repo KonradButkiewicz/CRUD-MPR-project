@@ -36,10 +36,14 @@ public class StudentService {
 
     @Transactional
     public String editStudent(StudentDTO studentDTO, Student student) {
-        student = StudentEdit.toEntity(student, studentDTO);
-        studentRepository.save(student);
+        try {
+            student = StudentEdit.toEntity(student, studentDTO);
+            studentRepository.save(student);
 
-        return "Student edited";
+            return "Student edited";
+        }catch (Exception e){
+        throw new RuntimeException("Edit failed", e);
+        }
     }
 
     public List<StudentDTO> getAllStudents() {

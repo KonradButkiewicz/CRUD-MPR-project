@@ -41,7 +41,7 @@ public class CourseControllerTest {
     void getAllCourses() throws Exception {
         when(courseService.getAllCourses()).thenReturn(Arrays.asList(new CourseDTO(), new CourseDTO()));
 
-        mockMvc.perform(get("/course/all"))
+        mockMvc.perform(get("/course"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(2));
@@ -51,7 +51,7 @@ public class CourseControllerTest {
     void addCourse() throws Exception {
         when(courseService.createCourse(any())).thenReturn("Course created");
 
-        ResultActions result = mockMvc.perform(post("/course/create")
+        ResultActions result = mockMvc.perform(post("/course")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
@@ -63,16 +63,29 @@ public class CourseControllerTest {
         when(courseService.findByID(any())).thenReturn(new CourseDTO());
         when(courseService.editCourse(any(), any())).thenReturn("Course edited");
 
-        ResultActions result = mockMvc.perform(put("/course/edit/{id}", 1L)
+        ResultActions result = mockMvc.perform(put("/course/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
-        result.andExpect(status().isCreated());
+        result.andExpect(status().isOk());
     }
 
     @Test
+    void editCourseFailure() throws Exception {
+        when(courseService.findByID(any())).thenReturn(new CourseDTO());
+        when(courseService.editCourse(any(), any())).thenThrow(new RuntimeException("Edit failed"));
+
+        ResultActions result = mockMvc.perform(put("/course/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"));
+
+        result.andExpect(status().isInternalServerError());
+    }
+
+
+    @Test
     void deleteRoomsBelowNumber200() throws Exception {
-         ResultActions result = mockMvc.perform(post("/course/delete"));
+        ResultActions result = mockMvc.perform(delete("/course"));
 
         result.andExpect(status().isOk());
     }

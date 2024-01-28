@@ -18,26 +18,30 @@ import java.util.List;
 public class CourseController {
     private final CourseService courseService;
 
-    @GetMapping("/all")
+    @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<CourseDTO> getAllCourses(){
         return courseService.getAllCourses();
     }
 
-    @PostMapping("/create")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public void addCourse(@RequestBody @Validated CourseDTO courseDTO){
         courseService.createCourse(courseDTO);
     }
 
-    @PutMapping("/edit/{id}")
-    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
     public void editCourse(@RequestBody @Validated CourseDTO courseDTO, @PathVariable Long id) {
-        courseService.editCourse(courseDTO, CourseCreate.toEntity(courseService.findByID(id)));}
+        courseService.editCourse(courseDTO, CourseCreate.toEntity(courseService.findByID(id)));
+    }
 
-    @PostMapping("/delete")
+
+    @DeleteMapping
     @ResponseStatus(HttpStatus.OK)
     public void delete(){
         courseService.deleteRoomsBelowNumber200();
     }
 }
+
+

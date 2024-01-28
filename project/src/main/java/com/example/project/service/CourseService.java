@@ -35,10 +35,14 @@ public class CourseService {
 
     @Transactional
     public String editCourse(CourseDTO courseDTO, Course course) {
-        Course courseEdit = CourseEdit.toEntity(course, courseDTO);
+        try{
+            Course courseEdit = CourseEdit.toEntity(course, courseDTO);
 
-        courseRepository.save(courseEdit);
-        return "Course edited";
+            courseRepository.save(courseEdit);
+            return "Course edited";
+        }catch (Exception e){
+            throw new RuntimeException("Edit failed", e);
+        }
     }
 
     public List<CourseDTO> getAllCourses() {

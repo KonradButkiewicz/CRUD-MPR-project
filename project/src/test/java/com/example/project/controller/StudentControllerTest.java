@@ -38,7 +38,7 @@ public class StudentControllerTest {
     void getAllStudents() throws Exception {
         when(studentService.getAllStudents()).thenReturn(Arrays.asList(new StudentDTO(), new StudentDTO()));
 
-        mockMvc.perform(get("/students/all"))
+        mockMvc.perform(get("/students"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.length()").value(2));
@@ -48,7 +48,7 @@ public class StudentControllerTest {
     void addCourse() throws Exception {
         when(studentService.createStudent(any())).thenReturn("Student created");
 
-        ResultActions result = mockMvc.perform(post("/students/create")
+        ResultActions result = mockMvc.perform(post("/students")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
@@ -60,13 +60,24 @@ public class StudentControllerTest {
         when(studentService.findByID(any())).thenReturn(new StudentDTO());
         when(studentService.editStudent(any(), any())).thenReturn("Student edited");
 
-        ResultActions result = mockMvc.perform(put("/students/edit/{id}", 1L)
+        ResultActions result = mockMvc.perform(put("/students/{id}", 1L)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content("{}"));
 
         result.andExpect(status().isOk());
     }
 
+    @Test
+    void editStudentFailure() throws Exception {
+        when(studentService.findByID(any())).thenReturn(new StudentDTO());
+        when(studentService.editStudent(any(), any())).thenThrow(new RuntimeException("Edit failed"));
+
+        ResultActions result = mockMvc.perform(put("/students/{id}", 1L)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content("{}"));
+
+        result.andExpect(status().isInternalServerError());
+    }
 
     @Test
     void getStudentByBirthYear() throws Exception {

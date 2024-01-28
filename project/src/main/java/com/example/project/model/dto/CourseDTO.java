@@ -23,5 +23,5 @@ public class  CourseDTO {
     @NotNull(message = "Room number can not be null")
     private Integer roomNumber;
 
-    private List<Student> studentsList;
+    private List<StudentDTO> studentsList;
 }
